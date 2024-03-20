@@ -1,41 +1,64 @@
-import tkinter as tk
-from tkinter import messagebox
+from tkinter import *
 
-def calculate(op):
-    try:
-        num1 = float(entry1.get())
-        num2 = float(entry2.get())
-        if op == '+':
-            result = num1 + num2
-        elif op == '-':
-            result = num1 - num2
-        elif op == '*':
-            result = num1 * num2
-        elif op == '/':
+def calculate(operator):
+    num1 = val1.get()
+    num2 = val2.get()
+
+    if operator == '+':
+        result = num1 + num2
+    elif operator == '-':
+        result = num1 - num2
+    elif operator == '*':
+        result = num1 * num2
+    elif operator == '/':
+        if num2 != 0: 
             result = num1 / num2
-        result_label.config(text = "Result: " + str(result))
-    except Exception as e:
-        messagebox.showerror("Error", "Invalid input")
+        else:
+            result = "Error: Division by zero"
 
-root = tk.Tk()
-root.title("Calculator")
+    Textbox_result.delete(0, END)
+    Textbox_result.insert(0, result)
 
-tk.Label(root, text="Calculator", font=("Arial", 20)).grid(row=0, column=0, columnspan=4)
+root = Tk()
+root.geometry("400x300")
+root.title("URK23CS1028")
+root.configure(bg='grey')  # Set root window background color to grey
 
-tk.Label(root, text="Type Value 1:").grid(row=1, column=0)
-entry1 = tk.Entry(root)
-entry1.grid(row=1, column=1)
+l = Label(root, text='Calculator', font=('Calibri', 14), fg='black', bg='grey')
+l.place(x=155, y=30)
 
-tk.Label(root, text="Type Value 2:").grid(row=2, column=0)
-entry2 = tk.Entry(root)
-entry2.grid(row=2, column=1)
+l1 = Label(root, text='Type Value 1', bg='grey', font=('Calibri', 10))
+l1.place(x=100, y=70)
 
-tk.Button(root, text="+", command=lambda: calculate('+'), bg='green').grid(row=3, column=0)
-tk.Button(root, text="-", command=lambda: calculate('-'), bg='green').grid(row=3, column=1)
-tk.Button(root, text="*", command=lambda: calculate('*'), bg='green').grid(row=3, column=2)
-tk.Button(root, text="/", command=lambda: calculate('/'), bg='green').grid(row=3, column=3)
+val1 = IntVar()
+val2 = IntVar()
 
-result_label = tk.Label(root, text="Result: ")
-result_label.grid(row=4, column=0, columnspan=4)
+Entry_value1 = Entry(root, textvariable=val1, width=20)
+Entry_value1.place(x=200, y=70)
+Entry_value1.delete(0,END)
+l2 = Label(root, text='Type Value 2', bg='grey', font=('Calibri', 10))
+l2.place(x=100, y=100)
+
+Entry_value2 = Entry(root, textvariable=val2, width=20)
+Entry_value2.delete(0,END)
+Entry_value2.place(x=200, y=100)
+
+Button_add = Button(root, text='+', bg='green', fg='white', width=5, command=lambda: calculate('+'))
+Button_add.place(x=100, y=130)
+
+Button_subtract = Button(root, text='-', bg='green', fg='white', width=5, command=lambda: calculate('-'))
+Button_subtract.place(x=150, y=130)
+
+Button_multiply = Button(root, text='*', bg='green', fg='white', width=5, command=lambda: calculate('*'))
+Button_multiply.place(x=200, y=130)
+
+Button_divide = Button(root, text='/', bg='green', fg='white', width=5, command=lambda: calculate('/'))
+Button_divide.place(x=250, y=130)
+
+l3 = Label(root, text='Result:', bg='grey', font=('Calibri', 10))
+l3.place(x=100, y=200)
+
+Textbox_result = Entry(root, width=20)
+Textbox_result.place(x=150, y=200)
 
 root.mainloop()
